@@ -1,32 +1,37 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strconv"
 )
 
-func move(s int, e int) int {
-	m := e - s
-	if m < 0 {
-		return m * -1
+var scanner = bufio.NewScanner(os.Stdin)
+
+func readLine() int {
+	scanner.Scan()
+	n, _ := strconv.Atoi(scanner.Text())
+	return n
+}
+
+func absInt(n int) int {
+	if n < 0 {
+		return -n
 	}
-	return m
+	return n
 }
 
 func main() {
-	var n int
+	scanner.Split(bufio.ScanWords)
+	n := readLine()
 
-	fmt.Scan(&n)
-
-	var t, x, y, mt, mx, my int
+	var mt, mx, my int
 	for i := 0; i < n; i++ {
-		fmt.Scan(&t, &x, &y)
+		t, x, y := readLine(), readLine(), readLine()
 		mt = t - mt
-		m := move(mx, x) + move(my, y)
+		m := absInt(x-mx) + absInt(y-my)
 
-		if m == 0 {
-			fmt.Print("No\n")
-			return
-		}
 		if m > mt {
 			fmt.Print("No\n")
 			return
